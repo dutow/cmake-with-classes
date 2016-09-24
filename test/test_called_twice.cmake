@@ -1,0 +1,19 @@
+
+include(../CMakeWithClasses.cmake)
+
+	
+DEFINE_CLASS("CLASS_A")
+DEFINE_METHOD("CLASS_A" "FOO")
+MACRO("${METHOD_NAME}")
+  MATH(EXPR CALL_COUNT "${CALL_COUNT}+1")
+  METHOD_RETURN(CALL_COUNT)
+ENDMACRO()
+
+CREATE_INSTANCE("AC" "CLASS_A")
+
+SET(CALL_COUNT 0)
+AC_FOO()
+
+IF(NOT "${CALL_COUNT}" EQUAL 2)
+  MESSAGE(SEND_ERROR "Expected CLASS_A::FOO to be called twice, but it was called ${CALL_COUNT} time(s).")
+ENDIF()

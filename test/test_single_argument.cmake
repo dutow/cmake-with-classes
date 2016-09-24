@@ -1,0 +1,18 @@
+
+include(../CMakeWithClasses.cmake)
+
+
+DEFINE_CLASS("CLASS_A")
+DEFINE_METHOD("CLASS_A" "FOO" ARGNAME1)
+MACRO("${METHOD_NAME}")
+  SET(METHOD_ARG "${ARGNAME1}")
+  METHOD_RETURN(METHOD_ARG)
+ENDMACRO()
+
+CREATE_INSTANCE("AC" "CLASS_A")
+
+AC_FOO(1337)
+
+IF(NOT "${METHOD_ARG}" EQUAL 1337)
+  MESSAGE(SEND_ERROR "Argument passed to method incorrectly. Expected 1337, got ${METHOD_ARG}")
+ENDIF()
